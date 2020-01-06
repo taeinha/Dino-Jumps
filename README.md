@@ -28,7 +28,8 @@ Bonus MVPs:
 
 ## Architecture and Technologies
 Technologies used to develop this game:
-- Javascript (vanilla DOM, game logic)
+- Javascript (game logic)
+- Canvas (2d renderer)
 - Webpack to bundle js files
 - Firebase to store high scores in Firebase NoSQL cloud DB
 - Heroku to deploy for live production
