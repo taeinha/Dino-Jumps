@@ -47,8 +47,8 @@ Technologies used to develop this game:
   - Create an object to keep track of time elapsed since start of the level (MVP 4)
   
 - Day 4:
-  - Look into Heroku deployment using Firebase
-  - Create ability to handle restarting the level (MVP 5)
+  - Look into Heroku deployment using Firebase (MVP 5)
+  - Create ability to handle restarting the level (MVP 6)
   
 - Day 5:
   - Polish and refactor code if necessary
