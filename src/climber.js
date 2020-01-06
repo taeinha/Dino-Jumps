@@ -1,3 +1,5 @@
+
+
 class Climber {
   constructor(options) {
     this.pos = options.pos;
@@ -6,6 +8,8 @@ class Climber {
     this.color = options.color;
     this.game = options.game;
     this.jump = false;
+    this.move = this.move.bind(this);
+    
   }
 
   draw(ctx) {
@@ -15,23 +19,65 @@ class Climber {
   }
 
   move(dir) {
-
     switch (dir) {
-      case 'LEFT':
-        this.pos[0] = -this.game.MOVE_SPEED[0];
+      case "ArrowLeft":
+        this.vel[0] = -1 * this.game.constructor.MOVE_SPEED[0];
         break;
-      case 'RIGHT':
-        this.pos[0] = this.game.MOVE_SPEED[0];
+      case "ArrowRight":
+        this.vel[0] = this.game.constructor.MOVE_SPEED[0];
         break;
-      case 'JUMP':
-        if (!this.jump) {
-          this.pos[1] -= 20;
-          this.jump = true;
-        }
+      case "ArrowDown":
+        this.charJump();
         break;
     }
-    this.pos[0] += this.game.MOVE_SPEED[0];
-    this.pos[1] += this.game.MOVE_SPEED[1];
+    if (dir === "ArrowLeft,ArrowDown" || dir === "ArrowDown,ArrowLeft") {
+      this.vel[0] = -2 * this.game.constructor.MOVE_SPEED[0];
+      this.charJump();
+    } else if (dir === "ArrowRight,ArrowDown" || dir === "ArrowDown,ArrowRight") {
+      this.vel[0] = 2 * this.game.constructor.MOVE_SPEED[0];
+      this.charJump();
+    }
+  }
+
+  charJump() {
+    if (!this.jump) {
+      this.vel[1] -= this.game.constructor.MOVE_SPEED[1];
+      this.jump = true;
+    }
+  }
+
+  gravity() {
+    this.vel[1] += this.game.constructor.GRAVITY;
+    this.pos = [this.pos[0] + this.vel[0], this.pos[1] + this.vel[1]];
+  }
+
+  friction() {
+    this.vel[0] *= this.game.constructor.FRICTION;
+  }
+
+  floor() {
+    if (this.pos[1] > this.game.constructor.START_POS[1]) {
+      this.pos[1] = this.game.constructor.START_POS[1];
+      this.jump = false;
+      this.vel[1] = 0;
+    }
+  }
+
+  walls() {
+    if (this.pos[0] < this.game.constructor.WALL_START[0]) {
+      this.pos[0] = this.game.constructor.WALL_START[0];
+      this.vel[0] = 0;
+    } else if (this.pos[0] > this.game.constructor.WALL_START[1]) {
+      this.pos[0] = this.game.constructor.WALL_START[1];
+      this.vel[0] = 0;
+    }
+  }
+
+  physics() {
+    this.gravity();
+    this.friction();
+    this.floor();
+    this.walls();
   }
 
 

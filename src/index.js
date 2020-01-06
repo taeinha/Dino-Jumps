@@ -1,3 +1,5 @@
+import './styles/index.scss';
+
 import Game from './game';
 import GameView from './game_view';
 
@@ -8,5 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   
   const game = new Game();
   const ctx = canvas.getContext("2d");
-  new GameView(game, ctx).start();
+  const gameView = new GameView(game, ctx);
+  gameView.start();
 });
