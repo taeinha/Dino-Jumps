@@ -17,7 +17,7 @@ class GameView {
 
   resetControl() {
     if (this.keys.includes("ArrowDown")) {
-      this.climber.releaseJump();
+      this.climber.releaseJump(null, this.keys.toString());
     }
     this.keys = [];
   }

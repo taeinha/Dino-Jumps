@@ -58,11 +58,14 @@ Game.DIM_X = 600;
 Game.DIM_Y = 900;
 Game.START_POS = [300, 826]; // x, y
 Game.CLIMBER_SIZE = [25, 50]; // width, height
-Game.MOVE_SPEED = [1.5, 30]; // x, y
+Game.MOVE_SPEED = 3; 
+Game.JUMP_SPEED = [50, 70]; // x, y
+Game.MAX_JUMP_SPEED = [50, 50];
 Game.FLOOR_START = [12, 888];
 Game.WALL_START = [12 + 12, 588 - 36];
 Game.BG_COLOR = "#000000";
 Game.GRAVITY = 1.5;
+Game.ARC = [0.5, 10];
 Game.FRICTION = 0.8;
 
 export default Game;
