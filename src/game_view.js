@@ -3,24 +3,12 @@ class GameView {
     this.ctx = ctx;
     this.game = game;
     this.climber = this.game.climber;
-    this.resetControl();
-    // this.keys = [];
+    this.keys = [];
     this.setControl = this.setControl.bind(this);
     this.resetControl = this.resetControl.bind(this);
   }
 
   setControl(e) {
-    // switch(e.key) {
-    //   case 'ArrowLeft':
-    //     this.controls.left = true;
-    //     break;
-    //   case 'ArrowRight':
-    //     this.controls.right = true;
-    //     break;
-    //   case 'ArrowDown':
-    //     this.controls.jump = true;
-    //     break;
-    // }
     if (!this.keys.includes(e.key)) {
       this.keys.push(e.key);
     }
@@ -28,11 +16,9 @@ class GameView {
   }
 
   resetControl() {
-    // this.controls = {
-    //   left: false,
-    //   right: false,
-    //   jump: false
-    // };
+    if (this.keys.includes("ArrowDown")) {
+      this.climber.releaseJump();
+    }
     this.keys = [];
   }
 
@@ -43,15 +29,19 @@ class GameView {
 
   start() {
     this.attachKeyHandlers();
+    this.lastTime = 0;
     requestAnimationFrame(this.render.bind(this));
   }
 
-  render() {
+  render(time) {
+    const delta = time - this.lastTime;
+
     if (this.keys[0]) {
-      this.climber.move(this.keys.toString());
-    }
+      this.climber.move(this.keys.toString(), delta);
+    } 
     this.climber.physics();
     this.game.draw(this.ctx);
+    this.lastTime = time;
     requestAnimationFrame(this.render.bind(this));
   }
 }

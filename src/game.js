@@ -24,8 +24,15 @@ class Game {
     ctx.strokeStyle = "#108914";
     ctx.lineWidth = 24;
     ctx.beginPath();
-    ctx.moveTo(0, Game.FLOOR_START);
-    ctx.lineTo(600, Game.FLOOR_START);
+    ctx.moveTo(0, Game.FLOOR_START[1]);
+    ctx.lineTo(600, Game.FLOOR_START[1]);
+    ctx.stroke();
+
+    ctx.strokeStyle = "#487299";
+    ctx.lineWidth = 24;
+    ctx.beginPath();
+    ctx.moveTo(0, Game.FLOOR_START[0]);
+    ctx.lineTo(600, Game.FLOOR_START[0]);
     ctx.stroke();
   }
 
@@ -52,7 +59,7 @@ Game.DIM_Y = 900;
 Game.START_POS = [300, 826]; // x, y
 Game.CLIMBER_SIZE = [25, 50]; // width, height
 Game.MOVE_SPEED = [1.5, 30]; // x, y
-Game.FLOOR_START = 888;
+Game.FLOOR_START = [12, 888];
 Game.WALL_START = [12 + 12, 588 - 36];
 Game.BG_COLOR = "#000000";
 Game.GRAVITY = 1.5;

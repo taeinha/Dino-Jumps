@@ -9,7 +9,7 @@ class Climber {
     this.game = options.game;
     this.jump = false;
     this.move = this.move.bind(this);
-    
+    this.jumpTime = 0;
   }
 
   draw(ctx) {
@@ -18,7 +18,7 @@ class Climber {
     ctx.fill();
   }
 
-  move(dir) {
+  move(dir, delta) {
     switch (dir) {
       case "ArrowLeft":
         this.vel[0] = -1 * this.game.constructor.MOVE_SPEED[0];
@@ -27,28 +27,35 @@ class Climber {
         this.vel[0] = this.game.constructor.MOVE_SPEED[0];
         break;
       case "ArrowDown":
-        this.charJump();
+        this.holdJump(delta);
         break;
     }
     if (dir === "ArrowLeft,ArrowDown" || dir === "ArrowDown,ArrowLeft") {
-      this.vel[0] = -2 * this.game.constructor.MOVE_SPEED[0];
-      this.charJump();
+      this.holdJump(delta, -2 * this.game.constructor.MOVE_SPEED[0]);
     } else if (dir === "ArrowRight,ArrowDown" || dir === "ArrowDown,ArrowRight") {
-      this.vel[0] = 2 * this.game.constructor.MOVE_SPEED[0];
-      this.charJump();
+      this.holdJump(delta, 2 * this.game.constructor.MOVE_SPEED[0]);
     }
   }
 
-  charJump() {
+  holdJump(delta, velX) {
+    this.jumpTime += delta/1000;
+    if (this.jumpTime >= 1) {
+      this.releaseJump(velX);
+    }
+  }
+
+  releaseJump(velX) {
+    this.jumpTime = 0;
     if (!this.jump) {
       this.vel[1] -= this.game.constructor.MOVE_SPEED[1];
+      this.vel[0] += this.game.constructor.MOVE_SPEED[0];
       this.jump = true;
+      this.pos = [this.pos[0] + this.vel[0], this.pos[1] + this.vel[1]];
     }
   }
 
   gravity() {
     this.vel[1] += this.game.constructor.GRAVITY;
-    this.pos = [this.pos[0] + this.vel[0], this.pos[1] + this.vel[1]];
   }
 
   friction() {
@@ -58,6 +65,10 @@ class Climber {
   floor() {
     if (this.pos[1] > this.game.constructor.START_POS[1]) {
       this.pos[1] = this.game.constructor.START_POS[1];
+      this.jump = false;
+      this.vel[1] = 0;
+    } else if (this.pos[1] < this.game.constructor.FLOOR_START[0]) {
+      this.pos[1] = this.game.constructor.FLOOR_START[0];
       this.jump = false;
       this.vel[1] = 0;
     }
@@ -78,6 +89,7 @@ class Climber {
     this.friction();
     this.floor();
     this.walls();
+    this.pos = [this.pos[0] + this.vel[0], this.pos[1] + this.vel[1]];
   }
 
 
