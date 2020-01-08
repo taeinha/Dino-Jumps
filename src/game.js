@@ -2,12 +2,14 @@ import Climber from './climber';
 import * as Util from './util';
 import Platform from './platform';
 import levels from './levels';
+import { writeHighScoreData } from './firebase';
 
 class Game {
 
   constructor() {
     this.FPS = 60;
     this.MAX_VEL_Y = 15;
+    this.MAX_LEVELS = Object.keys(levels).length;
     this.dim_x = 600;
     this.dim_y = 900;
     this.world_y = 900;
@@ -23,6 +25,8 @@ class Game {
     this.arc = [1.5, 1.5];
     this.friction = 0.75;
     this.level = 1;
+    this.elapsedTime = 0;
+    this.seconds = 0;
 
     this.climber = new Climber({
       pos: this.start_pos,
@@ -32,6 +36,8 @@ class Game {
     });
 
     this.platforms = levels[this.level].map(obj => new Platform(obj));
+  
+    // writeHighScoreData("tae","asdasd");
   }
 
   // viewPortUpdate() {
@@ -43,8 +49,13 @@ class Game {
   //     climber.pos[1] = climber.pos[1] + this.viewPortOffset;
   //   // }    
   // }
+//Util.randomId()
+  writeHighScoreData(name, time) {
+    const scoreRef = firebaseDB.ref('highscores/' + "1234");
+    scoreRef.set({name, time});
+  }
 
-  draw(ctx) {
+  draw(ctx, delta) {
 
     ctx.clearRect(0, 0, this.dim_x, this.dim_y);
     ctx.fillStyle = this.bg_color;
@@ -54,6 +65,19 @@ class Game {
     this.walls(ctx);
     this.climber.draw(ctx);
     this.drawPlatforms(ctx);
+    this.drawTimer(ctx, delta);
+    
+  }
+
+  drawTimer(ctx, delta) {
+    this.seconds += delta / 1000;
+    if (this.seconds >= 0.99) {
+      this.elapsedTime++;
+      this.seconds = 0;
+    }
+    ctx.font = "20px Arial";
+    ctx.fillStyle = "#aaffb0";
+    ctx.fillText(Util.convertSeconds(this.elapsedTime), 35, 50);
   }
 
   drawPlatforms(ctx) {
@@ -67,13 +91,23 @@ class Game {
   }
 
   nextLevel() {
-    this.restartLevel();
-    this.level++;
-    this.changePlatforms();
+    if (this.level >= this.MAX_LEVELS) {
+      this.openHighscoreModal();
+    } else {
+      this.restartLevel();
+    }
+  }
+
+  openHighscoreModal() {
+    const modal = document.getElementById("highscore-modal");
+    modal.className = "modal-background";
+
   }
 
   restartLevel() {
     this.climber.pos = [300, this.world_y - this.climberSize[1] - 25];
+    this.level++;
+    this.changePlatforms();
   }
 
   floor(ctx) {

@@ -41,7 +41,7 @@ class GameView {
       if (this.keys[0]) {
         this.climber.move(this.keys.toString(), delta);
       } 
-      this.game.draw(this.ctx);
+      this.game.draw(this.ctx, delta);
       this.lastTime = time;
     }
   }

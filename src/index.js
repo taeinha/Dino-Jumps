@@ -1,3 +1,4 @@
+import "./styles/reset.scss";
 import './styles/index.scss';
 
 import Game from './game';
@@ -13,3 +14,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const gameView = new GameView(game, ctx);
   gameView.start();
 });
+
+const modal = document.getElementById("highscore-modal");
+// const _listener = e => {
+//   debugger
+//   if (e.target === modal) {
+//     modal.className = "modal-background hidden";
+//   }
+// };
+
+// modal.addEventListener("onclick", _listener);
+
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
