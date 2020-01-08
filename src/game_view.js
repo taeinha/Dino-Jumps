@@ -12,11 +12,10 @@ class GameView {
     if (!this.keys.includes(e.key)) {
       this.keys.push(e.key);
     }
-
   }
 
   resetControl() {
-    if (this.keys.includes("ArrowDown")) {
+    if (this.keys.includes("ArrowDown") && !this.keys.includes("ArrowUp")) {
       this.climber.releaseJump(null, this.keys.toString());
     }
     this.keys = [];
