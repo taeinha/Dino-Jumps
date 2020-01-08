@@ -9,19 +9,22 @@ class Climber {
     this.game = options.game;
     this.jump = {
       up: false,
-      hold: false
+      hold: false,
+      left: false,
+      right: false
     };
     this.move = this.move.bind(this);
     this.jumpTime = 0;
   }
 
   draw(ctx) {
-    ctx.fillStyle = this.color;
     if (this.jump.hold) {
-      this.size[1] = 50 / 2;
+      this.size[1] = this.game.climberSize[1] / 2;
     } else {
       this.size[1] = this.game.climberSize[1];
     }
+
+    ctx.fillStyle = this.color;
     ctx.fillRect(this.pos[0], this.pos[1], this.size[0], this.size[1]);
 
     this.drawPowerBar(ctx);
@@ -58,11 +61,13 @@ class Climber {
 
   handleJump(dir) {
     if (dir === "ArrowLeft,ArrowDown" || dir === "ArrowDown,ArrowLeft") {
+      this.jump.left = true;
       return -this.game.jump_speed[0];
     } else if (
       dir === "ArrowRight,ArrowDown" ||
       dir === "ArrowDown,ArrowRight"
     ) {
+      this.jump.right = true;
       return this.game.jump_speed[0];
     } else if (dir === "ArrowDown") {
       return 0.01;
@@ -93,38 +98,53 @@ class Climber {
   }
 
   gravity() {
-    this.vel[1] += this.game.gravity;
+    if (this.vel[1] < this.game.MAX_VEL_Y) {
+      this.vel[1] += this.game.gravity;
+    }
   }
 
   arc() {
-    // this.vel[0] += this.game.arc[0];
-    this.vel[1] += this.game.arc[1];
+    if (this.vel[1] < this.game.MAX_VEL_Y) {
+      this.vel[1] += this.game.arc[1];
+      if (this.jump.left) {
+        this.vel[0] -= this.game.arc[0];
+      } else if (this.jump.right) {
+        this.vel[0] += this.game.arc[0];
+      }
+    }
   }
 
   friction() {
     this.vel[0] *= this.game.friction;
   }
 
+  allowJump() {
+    this.jump.up = false;
+    this.jump.left = false;
+    this.jump.right = false;
+    this.friction();
+  }
+
   floor() {
     if (this.pos[1] > this.game.start_pos[1]) {
       this.pos[1] = this.game.start_pos[1];
-      this.pos[1] += this.jump.hold ? 25 : 0;
-      this.jump.up = false;
+      this.pos[1] += this.jump.hold ? 10 : 0;
+      this.allowJump();
       this.vel[1] = 0;
     } else if (this.pos[1] < this.game.floor_start[0]) {
       this.pos[1] = this.game.floor_start[0];
-      this.jump.up = false;
+      this.allowJump();
       this.vel[1] = 0;
     }
   }
 
   walls() {
-    if (this.pos[0] < this.game.wall_start[0]) {
+    if (this.pos[0] < this.game.wall_start[0]) { // LEFT
       this.pos[0] = this.game.wall_start[0];
-      this.vel[0] = 0;
-    } else if (this.pos[0] > this.game.wall_start[1]) {
+      this.vel[0] = -this.vel[0] / 2;
+    } else if (this.pos[0] > this.game.wall_start[1]) { // RIGHT
       this.pos[0] = this.game.wall_start[1];
-      this.vel[0] = 0;
+      this.vel[0] = -this.vel[0] / 2;
     }
   }
 
@@ -137,29 +157,6 @@ class Climber {
     );
   }
 
-  // handleCollision(rect) {
-  //   if (this.vel[1] < this.game.gravity && this.collisionCheck(rect)) {
-  //     // BOTTOM
-  //     this.vel[1] = 0;
-  //     this.vel[0] = 0;
-  //     this.pos[1] = rect.pos[1] + this.size[1] + 0.01;
-  //     this.jump.up = false;
-  //     // } else if (this.vel[0] < 0 && this.collisionCheck(rect)) { // RIGHT
-  //     //   this.vel[0] = 0;
-  //     //   this.vel[1] = 0;
-  //     //   this.pos[0] = this.pos[0] + 0.01;
-  //     // } else if (this.vel[0] < 0 && this.collisionCheck(rect)) { // LEFT
-  //     //   this.vel[0] = 0;
-  //     //   this.vel[1] = 0;
-  //     //   this.pos[0] = this.pos[0] + 0.01;
-  //   } else if (this.vel[1] > this.game.gravity && this.collisionCheck(rect)) {
-  //     // TOP
-  //     this.vel[1] = this.game.gravity;
-  //     this.pos[1] = rect.pos[1] - this.size[1] - 0.01;
-  //     this.jump.up = false;
-  //   }
-  // }
-
   handleCollision(rect) {
     const climberCenterX = this.pos[0] + (this.size[0] * 0.5);
     const climberCenterY = this.pos[1] + (this.size[1] * 0.5);
@@ -171,30 +168,43 @@ class Climber {
     const avgWidth = (rect.size[0] + this.size[0]) * 0.5; 
     const avgHeight = (rect.size[1] + this.size[1]) * 0.5; 
 
-    if (Math.abs(deltaX) > avgWidth || Math.abs(deltaY) > avgHeight) return false;
-
-    if (Math.abs(deltaX / rect.size[0]) > Math.abs(deltaY / rect.size[1])) {
-      if (deltaX < 0) { // LEFT
-        // debugger
-        this.pos[0] = rect.pos[0] - this.size[0];
-        this.vel = [0, 3];
-      } else { // RIGHT
-        // debugger
-        this.pos[0] = rect.pos[0] + rect.size[0]; 
-        this.vel = [0, 3];
+    if (Math.abs(deltaX) > avgWidth || Math.abs(deltaY) > avgHeight) return;
+    if (Math.abs(deltaX / rect.size[0]) < Math.abs(deltaY / rect.size[1])) {
+      if (deltaY < 0) {
+        // TOP
+        this.pos[1] = rect.pos[1] - this.size[1];
+        this.vel[1] = 0;
+        this.allowJump();
+        return true;
+      } else {
+        // BOTTOM
+        this.pos[1] = rect.pos[1] + rect.size[1];
+        this.vel = [this.vel[0] / 4, this.game.gravity];
       }
     } else {
-      if (deltaY < 0) { // TOP
-        this.pos[1] = rect.pos[1] - this.size[1];
-        this.vel[1] = this.game.gravity;
-        this.jump.up = false;
-      } else { // BOTTOM
-        this.pos[1] = rect.pos[1] + rect.size[1]; 
-        this.vel[1] = this.game.gravity;;
+      if (deltaX < 0) {
+        // LEFT
+        // debugger
+        this.pos[0] = rect.pos[0] - this.size[0];
+        this.vel = [Math.min(-this.vel[0] / 2, -3), 3];
+      } else {
+        // RIGHT
+        // debugger
+        this.pos[0] = rect.pos[0] + rect.size[0];
+        this.vel = [Math.min(-this.vel[0] / 2, -3), 3];
       }
     }
+    return false;
+  }
 
-    return true;
+  checkPlatforms() {
+    this.game.platforms.forEach(platform => {
+      // if(this.collisionCheck(platform)) {
+        if (this.handleCollision(platform) && platform.winner) {
+          this.game.nextLevel();
+        }
+      // }
+    });
   }
 
   physics() {
@@ -203,9 +213,11 @@ class Climber {
     this.friction();
     this.floor();
     this.walls();
-    this.handleCollision(this.game.platform);
+    this.checkPlatforms();
     this.pos = [this.pos[0] + this.vel[0], this.pos[1] + this.vel[1]];
   }
+
+
 }
 
 export default Climber;

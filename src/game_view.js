@@ -34,14 +34,16 @@ class GameView {
 
   render(time) {
     const delta = time - this.lastTime;
-
-    if (this.keys[0]) {
-      this.climber.move(this.keys.toString(), delta);
-    } 
-    this.climber.physics();
-    this.game.draw(this.ctx);
-    this.lastTime = time;
     requestAnimationFrame(this.render.bind(this));
+
+    this.climber.physics();
+    if (delta > 1000 / this.game.FPS) { // CAP FPS
+      if (this.keys[0]) {
+        this.climber.move(this.keys.toString(), delta);
+      } 
+      this.game.draw(this.ctx);
+      this.lastTime = time;
+    }
   }
 }
 

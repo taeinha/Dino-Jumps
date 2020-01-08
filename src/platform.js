@@ -4,6 +4,7 @@ class Platform {
     this.vel = options.vel || [0, 0];
     this.size = options.size;
     this.color = options.color;
+    this.winner = options.winner || false;
   }
 
   draw(ctx) {
