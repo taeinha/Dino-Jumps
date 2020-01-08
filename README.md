@@ -11,9 +11,9 @@ JS Climber is a 2D platformer inspired by the game, Jump King. The player contro
 
 ## Functionality & MVP
 In JS Climber, users will be able to:
-1. Move left or right, and be able to jump vertically and horizontally
-2. Be able to move on floors, platforms, etc.
-3. Can jump further based on a visual power bar
+1. Move left or right, and be able to jump vertically and horizontally based on a visual power bar
+2. Be able to collide with platforms on all sides
+3. Play the character in a viewport (canvas focused on the climber)
 4. Keep track of time and get a high score
 5. Play the game live on Heroku
 6. Restart the level
