@@ -37,6 +37,6 @@ export const randomId = () => {
     "_" +
     Math.random()
       .toString(36)
-      .slice(2)
+      .slice(2,10)
   );
 };

@@ -1,6 +1,7 @@
 import * as firebase from "firebase/app";
 import "firebase/database";
 import * as Util from "./util";
+import { merge } from "lodash";
 
 var firebaseConfig = {
   apiKey: "AIzaSyAViPloWdU6Ia70dPK_TUi0qVmwkHUSiYQ",
@@ -22,3 +23,21 @@ export const writeHighScoreData = (name, time) => {
   scoreRef.set({name, time});
 };
 
+export const retrieveHighScores = (dispatch) => {
+  firebaseDB.ref('highscores/').once('value').then( data => {
+    const merged = [];
+    data.forEach(el => {
+      const obj = {"id": el.key};
+      merged.push(merge({}, el.val(), obj));
+    });
+    dispatch(merged);
+  });
+};
+
+export const removeHighScore = (id, name, time, dispatch) => {
+  const ref = firebaseDB.ref("highscores/" + id);
+  return ref
+    .remove()
+    .then(writeHighScoreData(name, time));
+    // .retrieveHighScores(dispatch);
+};

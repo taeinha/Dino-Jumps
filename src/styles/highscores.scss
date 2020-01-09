@@ -1,0 +1,54 @@
+@import "colors.scss";
+
+.modal-content {
+  background-color: $white;
+  margin: 25% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  height: 30%;
+  width: 30%; 
+  border-radius: 10px;
+  border: 4px solid $grey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+.modal-content h1 {
+  margin-bottom: 30px;
+}
+
+.modal-content > form {
+  display: flex;
+  flex-direction: column;
+  width: 275px;
+  font-size: 20px;
+}
+
+.modal-content > form > label {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-content input[type="text"] {
+  width: 175px;
+  border-bottom: 2px solid $pink;
+  font-size: 16px;
+  padding: 5px;
+}
+
+.modal-content button {
+  border: 2px solid $pink;
+  border-radius: 5px;
+  width: 100px;
+  height: 35px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.modal-content button:hover {
+  background-color: $pink;
+  color: white;
+}

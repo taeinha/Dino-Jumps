@@ -1,17 +1,13 @@
 const levels = {
   1: [
     {
-      pos: [100, 750],
+      pos: [300, 550],
       size: [100, 30],
-      color: "#ffac8e"
+      color: "gold",
+      winner: true
     },
     {
-      pos: [300, 625],
-      size: [100, 30],
-      color: "#ffac8e"
-    },
-    {
-      pos: [470, 500],
+      pos: [470, 470],
       size: [100, 30],
       color: "#ffac8e"
     },
@@ -31,7 +27,7 @@ const levels = {
       color: "gold",
       winner: true
     }
-  ],
+  ]
   // 2: [
   //   {
   //     pos: [100, 750],

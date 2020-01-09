@@ -1,5 +1,6 @@
 import "./styles/reset.scss";
 import './styles/index.scss';
+import './styles/highscores.scss';
 
 import Game from './game';
 import GameView from './game_view';
@@ -15,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
   gameView.start();
 });
 
-const modal = document.getElementById("highscore-modal");
+// const modal = document.getElementById("highscore-modal");
 // const _listener = e => {
 //   debugger
 //   if (e.target === modal) {
@@ -25,8 +26,3 @@ const modal = document.getElementById("highscore-modal");
 
 // modal.addEventListener("onclick", _listener);
 
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-};

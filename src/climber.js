@@ -1,5 +1,3 @@
-import * as Util from "./util";
-
 class Climber {
   constructor(options) {
     this.pos = options.pos;
@@ -20,6 +18,7 @@ class Climber {
   draw(ctx) {
     if (this.jump.hold) {
       this.size[1] = this.game.climberSize[1] / 2;
+      // this.game.start_pos[1] = this.game.world_y - this.size[1] - 25;
     } else {
       this.size[1] = this.game.climberSize[1];
     }
@@ -123,6 +122,7 @@ class Climber {
     this.jump.left = false;
     this.jump.right = false;
     this.friction();
+    this.vel[1] = 0;
   }
 
   floor() {
@@ -130,11 +130,11 @@ class Climber {
       this.pos[1] = this.game.start_pos[1];
       this.pos[1] += this.jump.hold ? 10 : 0;
       this.allowJump();
-      this.vel[1] = 0;
+      
     } else if (this.pos[1] < this.game.floor_start[0]) {
       this.pos[1] = this.game.floor_start[0];
       this.allowJump();
-      this.vel[1] = 0;
+
     }
   }
 
@@ -200,7 +200,7 @@ class Climber {
   checkPlatforms() {
     this.game.platforms.forEach(platform => {
       // if(this.collisionCheck(platform)) {
-        if (this.handleCollision(platform) && platform.winner) {
+        if (this.handleCollision(platform) && platform.winner && !this.game.winner) {
           this.game.nextLevel();
         }
       // }
@@ -214,6 +214,8 @@ class Climber {
     this.floor();
     this.walls();
     this.checkPlatforms();
+    
+    // this.game.updateOffset();
     this.pos = [this.pos[0] + this.vel[0], this.pos[1] + this.vel[1]];
   }
 

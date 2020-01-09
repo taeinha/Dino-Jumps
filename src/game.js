@@ -2,19 +2,18 @@ import Climber from './climber';
 import * as Util from './util';
 import Platform from './platform';
 import levels from './levels';
-import { writeHighScoreData } from './firebase';
+import { writeHighScoreData, retrieveHighScores, removeHighScore } from "./firebase";
 
 class Game {
-
   constructor() {
     this.FPS = 60;
     this.MAX_VEL_Y = 15;
     this.MAX_LEVELS = Object.keys(levels).length;
-    this.dim_x = 600;
-    this.dim_y = 900;
-    this.world_y = 900;
+    this.dim_x = 900;
+    this.dim_y = 700;
+    this.world_y = 700;
     // this.offset = 0;
-    this.climberSize = [5, 20]; // width, height
+    this.climberSize = [10, 20]; // width, height
     this.start_pos = [300, this.world_y - this.climberSize[1] - 25]; // x, y
     this.move_speed = 3;
     this.jump_speed = [27, 27]; // x 50, y 70
@@ -30,14 +29,25 @@ class Game {
 
     this.climber = new Climber({
       pos: this.start_pos,
-      size: [10, 50],
+      size: [10, 20],
       color: Util.randomColor(),
       game: this
     });
 
     this.platforms = levels[this.level].map(obj => new Platform(obj));
-  
-    // writeHighScoreData("tae","asdasd");
+
+    this.highscores = null;
+    this.winner = false;
+    retrieveHighScores(this.setHighScores.bind(this));
+  }
+
+  setHighScores(data) {
+    data.sort((a, b) => a.time - b.time);
+    this.highscores = data;
+    const highscoreList = document.getElementsByClassName("game-highscores")[0];
+    this.highscores.forEach(hs => {
+      highscoreList.innerHTML += `<li>${hs.name} : ${hs.time}</li>`;
+    });
   }
 
   // viewPortUpdate() {
@@ -47,16 +57,16 @@ class Game {
   //   this.offset = this.dim_y - 75 - climberCenterY;
   //   // if (climberCenterY < this.viewPortOffset) {
   //     climber.pos[1] = climber.pos[1] + this.viewPortOffset;
-  //   // }    
+  //   // }
   // }
-//Util.randomId()
-  writeHighScoreData(name, time) {
-    const scoreRef = firebaseDB.ref('highscores/' + "1234");
-    scoreRef.set({name, time});
-  }
+  //Util.randomId()
+
+  // updateOffset() {
+  //   this.offset = this.start_pos[1] - this.climber.pos[1];
+  //   debugger
+  // }
 
   draw(ctx, delta) {
-
     ctx.clearRect(0, 0, this.dim_x, this.dim_y);
     ctx.fillStyle = this.bg_color;
     ctx.fillRect(0, 0, this.dim_x, this.dim_y);
@@ -66,12 +76,11 @@ class Game {
     this.climber.draw(ctx);
     this.drawPlatforms(ctx);
     this.drawTimer(ctx, delta);
-    
   }
 
   drawTimer(ctx, delta) {
     this.seconds += delta / 1000;
-    if (this.seconds >= 0.99) {
+    if (this.seconds >= 0.999 && !this.winner) {
       this.elapsedTime++;
       this.seconds = 0;
     }
@@ -82,6 +91,7 @@ class Game {
 
   drawPlatforms(ctx) {
     this.platforms.forEach(platform => {
+      // platform.pos[1] -= this.offset;
       platform.draw(ctx);
     });
   }
@@ -92,6 +102,7 @@ class Game {
 
   nextLevel() {
     if (this.level >= this.MAX_LEVELS) {
+      this.winner = true;
       this.openHighscoreModal();
     } else {
       this.restartLevel();
@@ -99,9 +110,41 @@ class Game {
   }
 
   openHighscoreModal() {
+    let name = "";
+
     const modal = document.getElementById("highscore-modal");
     modal.className = "modal-background";
 
+    modal.addEventListener("click", function hideModal(event) {
+      if (event.target == modal) {
+        modal.className = "modal-background hidden";
+        modal.removeEventListener("click", hideModal);
+      }
+    });
+    
+    const modalContent = 0;
+    const timeLabel = document.getElementById("game-highscores-form-time");
+    timeLabel.innerText = `${this.elapsedTime} seconds`;
+
+    const nameInput = document.getElementById("game-highscores-form-name");
+    nameInput.addEventListener("change", e => (name = e.currentTarget.value));
+
+    const button = document.getElementById("game-highscores-form-submit");
+    button.addEventListener("click", e => {
+      this.submitWinner(name, this.elapsedTime);
+    });
+  }
+
+  submitWinner(name, time) {
+    const numScores = this.highscores.length;
+    const lastScore = this.highscores[numScores-1];
+    if (numScores === 10 && this.elapsedTime < lastScore.time) {
+      removeHighScore(lastScore.id, name, time, this.setHighScores);
+    } else {
+      writeHighScoreData(name, time).then(el =>
+        retrieveHighScores(this.setHighScores)
+      );
+    }
   }
 
   restartLevel() {
