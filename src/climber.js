@@ -1,3 +1,5 @@
+import Sprites from "./sprites";
+
 class Climber {
   constructor(options) {
     this.pos = options.pos;
@@ -13,6 +15,8 @@ class Climber {
     };
     this.move = this.move.bind(this);
     this.jumpTime = 0;
+    
+    this.sprite = new Sprites("../images/DinoSprites.png", 576, 24, 1, 24);
   }
 
   draw(ctx) {
@@ -26,6 +30,16 @@ class Climber {
     ctx.fillStyle = this.color;
     ctx.fillRect(this.pos[0], this.pos[1], this.size[0], this.size[1]);
 
+    // this.sprite.draw(
+    //   false,
+    //   ctx,
+    //   this.pos[0],
+    //   this.pos[1],
+    //   this.size[0],
+    //   this.size[1],
+    //   0,
+    //   3
+    // );
     this.drawPowerBar(ctx);
   }
 

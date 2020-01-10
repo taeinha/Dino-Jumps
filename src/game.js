@@ -38,7 +38,7 @@ class Game {
 
     this.highscores = null;
     this.winner = false;
-    retrieveHighScores(this.setHighScores.bind(this));
+    // retrieveHighScores(this.setHighScores.bind(this));
   }
 
   setHighScores(data) {

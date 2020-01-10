@@ -29,7 +29,9 @@ export const convertSeconds = (seconds) => {
   const hours = Math.floor(seconds / 3600);
   const mins = Math.floor((seconds - (hours * 3600)) / 60);
   const secs = seconds - (hours * 3600) - (mins * 60);
-  return `${hours < 10 ? "0"+String(hours) : hours}:${mins < 10 ? + "0"+String(mins) : mins}:${secs < 10 ? + "0"+String(secs) : secs}`;
+  return `${hours < 10 ? "0" + String(hours) : hours}:${
+    mins < 10 ? +"0" + String(mins) : mins
+  }:${secs < 10 ? +"0" + String(secs) : secs}`;
 };
 
 export const randomId = () => {

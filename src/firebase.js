@@ -39,5 +39,4 @@ export const removeHighScore = (id, name, time, dispatch) => {
   return ref
     .remove()
     .then(writeHighScoreData(name, time));
-    // .retrieveHighScores(dispatch);
 };
