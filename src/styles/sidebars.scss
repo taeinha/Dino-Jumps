@@ -1,0 +1,48 @@
+@import "colors.scss";
+
+.game-left-sidebar {
+  width: 250px;
+  height: 700px;
+  margin-right: 10px;
+  box-sizing: border-box;
+}
+
+.game-highscores {
+  height: 420px;
+  padding: 5px;
+  background-color: white;
+  font-size: 20px;
+  border: 2px solid $pink;
+  border-radius: 10px;
+  margin-bottom: 7px;
+}
+
+.game-left-sidebar h1 {
+  font-weight: 500;
+  margin-bottom: 10px;
+  padding: 10px 0;
+  text-align: center;
+  border-bottom: 1px solid $grey;
+}
+
+.game-highscores li {
+  padding: 5px 10px;
+}
+
+.game-controls {
+  height: 273px;
+  background-color: white;
+  border: 2px solid $pink;
+  border-radius: 10px;
+  font-size: 20px;
+  padding: 5px;
+}
+
+.game-controls p {
+  padding: 5px 10px;
+}
+.game-controls span {
+  font-size: 22px;
+  font-weight: 700;
+  padding: 0 1.7px;
+}

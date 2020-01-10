@@ -6,7 +6,7 @@
   padding: 20px;
   border: 1px solid #888;
   height: 30%;
-  width: 30%; 
+  width: 400px; 
   border-radius: 10px;
   border: 4px solid $grey;
   display: flex;
@@ -51,4 +51,8 @@
 .modal-content button:hover {
   background-color: $pink;
   color: white;
+}
+
+.hidden {
+  display: none;
 }

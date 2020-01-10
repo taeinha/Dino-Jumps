@@ -1,6 +1,7 @@
 import "./styles/reset.scss";
 import './styles/index.scss';
 import './styles/highscores.scss';
+import './styles/sidebars.scss';
 
 import Game from './game';
 import GameView from './game_view';

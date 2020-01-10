@@ -9,16 +9,16 @@ class Game {
     this.FPS = 60;
     this.MAX_VEL_Y = 15;
     this.MAX_LEVELS = Object.keys(levels).length;
-    this.dim_x = 900;
+    this.dim_x = 700;
     this.dim_y = 700;
     this.world_y = 700;
     // this.offset = 0;
     this.climberSize = [10, 20]; // width, height
-    this.start_pos = [300, this.world_y - this.climberSize[1] - 25]; // x, y
+    this.start_pos = [this.dim_x / 2, this.world_y - this.climberSize[1] - 25]; // x, y
     this.move_speed = 3;
     this.jump_speed = [27, 27]; // x 50, y 70
     this.floor_start = [12, this.world_y - 12];
-    this.wall_start = [12 + 12, 588 - 36];
+    this.wall_start = [12 + 12, this.dim_x - 34];
     this.bg_color = "#000000";
     this.gravity = 1;
     this.arc = [1.5, 1.5];
@@ -46,7 +46,7 @@ class Game {
     this.highscores = data;
     const highscoreList = document.getElementsByClassName("game-highscores")[0];
     this.highscores.forEach(hs => {
-      highscoreList.innerHTML += `<li>${hs.name} : ${hs.time}</li>`;
+      highscoreList.innerHTML += `<li>${hs.name} - ${hs.time}</li>`;
     });
   }
 
@@ -122,29 +122,44 @@ class Game {
       }
     });
     
-    const modalContent = 0;
-    const timeLabel = document.getElementById("game-highscores-form-time");
-    timeLabel.innerText = `${this.elapsedTime} seconds`;
+    if (this.isWinner()) {
+      const modalContent = document.getElementsByClassName("game-highscores-winner")[0];
+      modalContent.className = "modal-content game-highscores-winner";
+      
+      const timeLabel = document.getElementById("game-highscores-form-time");
+      timeLabel.innerText = `${this.elapsedTime} seconds`;
 
-    const nameInput = document.getElementById("game-highscores-form-name");
-    nameInput.addEventListener("change", e => (name = e.currentTarget.value));
+      const nameInput = document.getElementById("game-highscores-form-name");
+      nameInput.addEventListener("change", e => (name = e.currentTarget.value));
 
-    const button = document.getElementById("game-highscores-form-submit");
-    button.addEventListener("click", e => {
-      this.submitWinner(name, this.elapsedTime);
-    });
+      const button = document.getElementById("game-highscores-form-submit");
+      button.addEventListener("click", e => {
+        this.submitWinner(name, this.elapsedTime);
+      });
+    } else {
+      const modalContent = document.getElementsByClassName("game-highscores-lose")[0];
+      modalContent.className = "modal-content game-highscores-lose";
+    }
+    
   }
 
   submitWinner(name, time) {
     const numScores = this.highscores.length;
-    const lastScore = this.highscores[numScores-1];
-    if (numScores === 10 && this.elapsedTime < lastScore.time) {
+    const lastScore = this.highscores[numScores - 1];
+    if (this.isWinner()) {
       removeHighScore(lastScore.id, name, time, this.setHighScores);
     } else {
       writeHighScoreData(name, time).then(el =>
         retrieveHighScores(this.setHighScores)
       );
     }
+  }
+
+  isWinner() {
+    const numScores = this.highscores.length;
+    const lastScore = this.highscores[numScores - 1];
+    if (numScores === 10 && this.elapsedTime >= lastScore.time) return false;
+    return true;
   }
 
   restartLevel() {
@@ -158,14 +173,14 @@ class Game {
     ctx.lineWidth = 24;
     ctx.beginPath();
     ctx.moveTo(0, this.floor_start[1]);
-    ctx.lineTo(600, this.floor_start[1]);
+    ctx.lineTo(this.dim_x, this.floor_start[1]);
     ctx.stroke();
 
     ctx.strokeStyle = "#487299";
     ctx.lineWidth = 24;
     ctx.beginPath();
     ctx.moveTo(0, this.floor_start[0]);
-    ctx.lineTo(600, this.floor_start[0]);
+    ctx.lineTo(this.dim_x, this.floor_start[0]);
     ctx.stroke();
   }
 
@@ -174,14 +189,14 @@ class Game {
     ctx.lineWidth = 24;
     ctx.beginPath();
     ctx.moveTo(12, 0);
-    ctx.lineTo(12, 900);
+    ctx.lineTo(12, this.dim_y);
     ctx.stroke();
 
     ctx.strokeStyle = "#487299";
     ctx.lineWidth = 24;
     ctx.beginPath();
-    ctx.moveTo(588, 0);
-    ctx.lineTo(588, 900);
+    ctx.moveTo(this.dim_x - 12, 0);
+    ctx.lineTo(this.dim_x - 12, this.dim_y);
     ctx.stroke();
   }
 }

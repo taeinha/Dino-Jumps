@@ -31,10 +31,15 @@ class Climber {
 
   drawPowerBar(ctx) {
     ctx.fillStyle = "white";
-    ctx.fillRect(50, 882, 100, 12);
+    ctx.fillRect(24, this.game.dim_y - 18, (this.game.dim_x - 48), 12);
 
     ctx.fillStyle = "red";
-    ctx.fillRect(50, 882, 100 * this.jumpTime, 12);
+    ctx.fillRect(
+      24,
+      this.game.dim_y - 18,
+      (this.game.dim_x - 48) * this.jumpTime,
+      12
+    );
   }
 
   move(dir, delta) {
