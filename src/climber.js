@@ -15,26 +15,38 @@ class Climber {
     };
     this.move = this.move.bind(this);
     this.jumpTime = 0;
-    
+    this.keydown = false;
     this.sprite = new Sprites(
       "https://github.com/taeinha/js-climber/blob/master/src/images/DinoSprites.png?raw=true",
+      "https://github.com/taeinha/js-climber/blob/master/src/images/DinoSpritesLeft.png?raw=true",
       576,24,1,24);
   }
 
   draw(ctx) {
-    if (this.jump.hold) {
-      this.size[1] = this.game.climberSize[1];
-      // this.game.start_pos[1] = this.game.world_y - this.size[1] - 25;
-    } else {
-      this.size[1] = this.game.climberSize[1];
-    }
+    // if (this.jump.hold) {
+    //   this.size[1] = this.game.climberSize[1];
 
+    //   // this.game.start_pos[1] = this.game.world_y - this.size[1] - 25;
+    // } else {
+    //   this.size[1] = this.game.climberSize[1];
+    // }
+    let startPos = 0;
+    let endPos = 3;
     // ctx.fillStyle = this.color;
     // ctx.fillRect(this.pos[0], this.pos[1], this.size[0], this.size[1]);
+    
+    if (this.jump.hold) {
+      startPos = 17;
+      endPos = 23;
+    } else if (!this.sprite.idle) {
+      startPos = 4;
+      endPos = 10;
+    }
+
     this.sprite.draw(ctx,
       this.pos[0], this.pos[1],
       this.size[0], this.size[1],
-      0, 3
+      startPos, endPos
     );
 
     this.drawPowerBar(ctx);
@@ -53,15 +65,42 @@ class Climber {
     );
   }
 
+  setToRun() {
+    this.sprite.idle = false;
+  }
+
+  setToIdle() {
+    this.sprite.idle = true;
+  }
+
+  holdKey() {
+    this.keydown = true;
+  }
+
+  releaseKey() {
+    this.keydown = false;
+    this.setToIdle();
+  }
+
+  runOrIdle() {
+    if (this.keydown) {
+      this.setToRun();
+    } else {
+      this.setToIdle();
+    }
+  }
+
   move(dir, delta) {
     switch (dir) {
       case "ArrowLeft":
         this.vel[0] = -1 * this.game.move_speed;
         this.sprite.left = true;
+        this.runOrIdle();
         break;
       case "ArrowRight":
         this.vel[0] = this.game.move_speed;
         this.sprite.left = false;
+        this.runOrIdle();
         break;
     }
 
