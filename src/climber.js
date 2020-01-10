@@ -16,30 +16,27 @@ class Climber {
     this.move = this.move.bind(this);
     this.jumpTime = 0;
     
-    this.sprite = new Sprites("../images/DinoSprites.png", 576, 24, 1, 24);
+    this.sprite = new Sprites(
+      "https://github.com/taeinha/js-climber/blob/master/src/images/DinoSprites.png?raw=true",
+      576,24,1,24);
   }
 
   draw(ctx) {
     if (this.jump.hold) {
-      this.size[1] = this.game.climberSize[1] / 2;
+      this.size[1] = this.game.climberSize[1];
       // this.game.start_pos[1] = this.game.world_y - this.size[1] - 25;
     } else {
       this.size[1] = this.game.climberSize[1];
     }
 
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.pos[0], this.pos[1], this.size[0], this.size[1]);
+    // ctx.fillStyle = this.color;
+    // ctx.fillRect(this.pos[0], this.pos[1], this.size[0], this.size[1]);
+    this.sprite.draw(ctx,
+      this.pos[0], this.pos[1],
+      this.size[0], this.size[1],
+      0, 3
+    );
 
-    // this.sprite.draw(
-    //   false,
-    //   ctx,
-    //   this.pos[0],
-    //   this.pos[1],
-    //   this.size[0],
-    //   this.size[1],
-    //   0,
-    //   3
-    // );
     this.drawPowerBar(ctx);
   }
 
@@ -60,9 +57,11 @@ class Climber {
     switch (dir) {
       case "ArrowLeft":
         this.vel[0] = -1 * this.game.move_speed;
+        this.sprite.left = true;
         break;
       case "ArrowRight":
         this.vel[0] = this.game.move_speed;
+        this.sprite.left = false;
         break;
     }
 
@@ -80,12 +79,14 @@ class Climber {
   handleJump(dir) {
     if (dir === "ArrowLeft,ArrowDown" || dir === "ArrowDown,ArrowLeft") {
       this.jump.left = true;
+      this.sprite.left = true;
       return -this.game.jump_speed[0];
     } else if (
       dir === "ArrowRight,ArrowDown" ||
       dir === "ArrowDown,ArrowRight"
     ) {
       this.jump.right = true;
+      this.sprite.left = false;
       return this.game.jump_speed[0];
     } else if (dir === "ArrowDown") {
       return 0.01;
