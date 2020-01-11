@@ -4,7 +4,7 @@ class MovingBackground {
     this.background.src = "https://github.com/taeinha/js-climber/blob/master/src/images/game_background_2.png?raw=true";
     this.background.width = 1245;
     this.background.height = 700;
-    this.vel = 200;
+    this.vel = 100;
     this.dist = 0;
     this.elapsedTime = Date.now();
   }
