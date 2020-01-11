@@ -1,32 +1,53 @@
 class Platform {
-  constructor(options) {
+  constructor(options, images) {
     this.pos = options.pos;
     this.vel = options.vel || [0, 0];
     this.size = options.size;
     this.color = options.color;
     this.winner = options.winner || false;
-    this.leftImg = new Image();
-    this.leftImg.src = "https://github.com/taeinha/js-climber/blob/master/src/images/platform_left.png?raw=true";
-    this.midImg = new Image();
-    this.midImg.src = "https://github.com/taeinha/js-climber/blob/master/src/images/platform_middle.png?raw=true";
-    this.rightImg = new Image();
-    this.rightImg.src = "https://github.com/taeinha/js-climber/blob/master/src/images/platform_right.png?raw=true";
-    
-  
+    this.theEnd = options.theEnd || false;
+    this.leftImg = images.leftImg;
+    this.midImg = images.midImg;
+    this.rightImg = images.rightImg;
+    this.verticalImg = images.verticalImg;
+    this.redFlag = images.redFlag;
+    this.star = images.star;
   }
 
   draw(ctx) {
-    // ctx.fillStyle = this.color;
-    // ctx.fillRect(this.pos[0], this.pos[1], this.size[0], this.size[1]);
     if (!this.isVertical) {
       this.horizontal(ctx);
     } else {
+      this.vertical(ctx);
+    }
 
+    if (this.theEnd) {
+      ctx.drawImage(
+        this.star,
+        this.pos[0] + this.size[0] / 2 - 20,
+        this.pos[1] - this.size[1] - 10,
+        40,
+        40
+      );
+    } else if (this.winner) {
+      ctx.drawImage(
+        this.redFlag,
+        this.pos[0] + this.size[0] / 2,
+        this.pos[1] - this.size[1] - 5,
+        20,
+        40
+      );
     }
   }
 
   vertical(ctx) {
-
+    ctx.drawImage(
+      this.verticalImg,
+      this.pos[0],
+      this.pos[1],
+      this.size[0],
+      this.size[1]
+    );
   }
 
   horizontal(ctx) {

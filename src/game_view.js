@@ -4,6 +4,7 @@ class GameView {
     this.game = game;
     this.climber = this.game.climber;
     this.keys = [];
+    this.startGame = false;
     this.setControl = this.setControl.bind(this);
     this.resetControl = this.resetControl.bind(this);
   }
@@ -29,9 +30,15 @@ class GameView {
   }
 
   start() {
-    this.attachKeyHandlers();
-    this.lastTime = 0;
-    requestAnimationFrame(this.render.bind(this));
+    // if (!this.startGame) {
+      
+    // } else {
+      this.attachKeyHandlers();
+      this.lastTime = 0;
+      requestAnimationFrame(this.render.bind(this));
+    // }
+
+    
   }
 
   render(time) {

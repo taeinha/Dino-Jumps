@@ -4,6 +4,7 @@ import Platform from './platform';
 import levels from './levels';
 import { writeHighScoreData, retrieveHighScores, removeHighScore } from "./firebase";
 import MovingBackground from './background';
+import IMAGES from './images';
 
 class Game {
   constructor() {
@@ -35,13 +36,13 @@ class Game {
       game: this
     });
 
-    this.platforms = levels[this.level].map(obj => new Platform(obj));
+    this.platforms = levels[this.level].map(obj => new Platform(obj, IMAGES));
 
     this.highscores = null;
     this.winner = false;
 
     this.background = new MovingBackground();
-    // retrieveHighScores(this.setHighScores.bind(this));
+    retrieveHighScores(this.setHighScores.bind(this));
   }
 
   setHighScores(data) {
@@ -89,7 +90,7 @@ class Game {
       this.seconds = 0;
     }
     ctx.font = "20px Arial";
-    ctx.fillStyle = "#aaffb0";
+    ctx.fillStyle = "#1E1E24";
     ctx.fillText(Util.convertSeconds(this.elapsedTime), 35, 50);
   }
 
@@ -101,7 +102,7 @@ class Game {
   }
 
   changePlatforms() {
-    this.platforms = levels[this.level].map(obj => new Platform(obj));
+    this.platforms = levels[this.level].map(obj => new Platform(obj, IMAGES));
   }
 
   nextLevel() {
@@ -159,10 +160,6 @@ class Game {
     }
   }
 
-  background(ctx) {
-
-  }
-
   isWinner() {
     const numScores = this.highscores.length;
     const lastScore = this.highscores[numScores - 1];
@@ -177,14 +174,14 @@ class Game {
   }
 
   floor(ctx) {
-    ctx.strokeStyle = "#3282b8";
+    ctx.strokeStyle = "#444140";
     ctx.lineWidth = 24;
     ctx.beginPath();
     ctx.moveTo(0, this.floor_start[1]);
     ctx.lineTo(this.dim_x, this.floor_start[1]);
     ctx.stroke();
 
-    ctx.strokeStyle = "#3282b8";
+    ctx.strokeStyle = "#444140";
     ctx.lineWidth = 24;
     ctx.beginPath();
     ctx.moveTo(0, this.floor_start[0]);
@@ -193,14 +190,14 @@ class Game {
   }
 
   walls(ctx) {
-    ctx.strokeStyle = "#3282b8";
+    ctx.strokeStyle = "#444140";
     ctx.lineWidth = 24;
     ctx.beginPath();
     ctx.moveTo(12, 0);
     ctx.lineTo(12, this.dim_y);
     ctx.stroke();
 
-    ctx.strokeStyle = "#3282b8";
+    ctx.strokeStyle = "#444140";
     ctx.lineWidth = 24;
     ctx.beginPath();
     ctx.moveTo(this.dim_x - 12, 0);

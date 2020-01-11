@@ -23,25 +23,7 @@ class Climber {
   }
 
   draw(ctx) {
-    // if (this.jump.hold) {
-    //   this.size[1] = this.game.climberSize[1];
 
-    //   // this.game.start_pos[1] = this.game.world_y - this.size[1] - 25;
-    // } else {
-    //   this.size[1] = this.game.climberSize[1];
-    // }
-    // let startPos = 0;
-    // let endPos = 3;
-    // ctx.fillStyle = this.color;
-    // ctx.fillRect(this.pos[0], this.pos[1], this.size[0], this.size[1]);
-    
-    // if (this.jump.hold) {
-    //   startPos = 17;
-    //   endPos = 23;
-    // } else if (!this.sprite.idle) {
-    //   startPos = 4;
-    //   endPos = 10;
-    // }
     let action;
 
     if (this.jump.hold) {
