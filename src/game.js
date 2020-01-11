@@ -3,6 +3,7 @@ import * as Util from './util';
 import Platform from './platform';
 import levels from './levels';
 import { writeHighScoreData, retrieveHighScores, removeHighScore } from "./firebase";
+import MovingBackground from './background';
 
 class Game {
   constructor() {
@@ -39,8 +40,7 @@ class Game {
     this.highscores = null;
     this.winner = false;
 
-    this.background = new Image();
-    this.background.src = "https://github.com/taeinha/js-climber/blob/master/src/images/Sky.png?raw=true";
+    this.background = new MovingBackground();
     // retrieveHighScores(this.setHighScores.bind(this));
   }
 
@@ -71,8 +71,9 @@ class Game {
 
   draw(ctx, delta) {
     ctx.clearRect(0, 0, this.dim_x, this.dim_y);
-    ctx.fillStyle = this.bg_color;
-    ctx.fillRect(0, 0, this.dim_x, this.dim_y);
+    // ctx.fillStyle = this.bg_color;
+    // ctx.fillRect(0, 0, this.dim_x, this.dim_y);
+    this.background.draw(ctx);
     // this.viewPortUpdate();
     this.floor(ctx);
     this.walls(ctx);
