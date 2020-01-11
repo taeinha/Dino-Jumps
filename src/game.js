@@ -19,7 +19,7 @@ class Game {
     this.jump_speed = [27, 27]; // x 50, y 70
     this.floor_start = [12, this.world_y - 12];
     this.wall_start = [12 + 12, this.dim_x - 34];
-    this.bg_color = "#000000";
+    this.bg_color = "white";
     this.gravity = 1;
     this.arc = [1.5, 1.5];
     this.friction = 0.75;
@@ -38,6 +38,9 @@ class Game {
 
     this.highscores = null;
     this.winner = false;
+
+    this.background = new Image();
+    // this.background.src = 
     // retrieveHighScores(this.setHighScores.bind(this));
   }
 
@@ -155,6 +158,10 @@ class Game {
     }
   }
 
+  background(ctx) {
+
+  }
+
   isWinner() {
     const numScores = this.highscores.length;
     const lastScore = this.highscores[numScores - 1];
@@ -169,14 +176,14 @@ class Game {
   }
 
   floor(ctx) {
-    ctx.strokeStyle = "#487299";
+    ctx.strokeStyle = "#3282b8";
     ctx.lineWidth = 24;
     ctx.beginPath();
     ctx.moveTo(0, this.floor_start[1]);
     ctx.lineTo(this.dim_x, this.floor_start[1]);
     ctx.stroke();
 
-    ctx.strokeStyle = "#487299";
+    ctx.strokeStyle = "#3282b8";
     ctx.lineWidth = 24;
     ctx.beginPath();
     ctx.moveTo(0, this.floor_start[0]);
@@ -185,14 +192,14 @@ class Game {
   }
 
   walls(ctx) {
-    ctx.strokeStyle = "#487299";
+    ctx.strokeStyle = "#3282b8";
     ctx.lineWidth = 24;
     ctx.beginPath();
     ctx.moveTo(12, 0);
     ctx.lineTo(12, this.dim_y);
     ctx.stroke();
 
-    ctx.strokeStyle = "#487299";
+    ctx.strokeStyle = "#3282b8";
     ctx.lineWidth = 24;
     ctx.beginPath();
     ctx.moveTo(this.dim_x - 12, 0);

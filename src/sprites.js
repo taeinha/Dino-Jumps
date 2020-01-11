@@ -1,15 +1,15 @@
 const SPRITES_LOC = {
   left: {
     idle: {
-      start: 20,
-      end: 23
+      start: 23,
+      end: 20
     },
     run: {
-      start: 13,
-      end: 19
+      start: 19,
+      end: 13
     },
     jump: {
-      start: 0,
+      start: 6,
       end: 6
     }
   },
@@ -24,7 +24,7 @@ const SPRITES_LOC = {
     },
     jump: {
       start: 17,
-      end: 23
+      end: 17
     }
   }
 };
@@ -55,16 +55,21 @@ class Sprites {
   updateFrame(startFrame, endFrame, changedDir) {
     const delta = Date.now() - this.elapsedTime;
     if (this.curFrame === undefined || changedDir) this.curFrame = startFrame;
-    if (delta < 1000 / 8) return;
-      if (this.curFrame >= endFrame) {
-        this.curFrame = startFrame;
-      } else {
+    if (delta < 1000 / 20) return;
+    if (
+      (this.curFrame >= endFrame && !this.left) ||
+      (this.curFrame <= endFrame && this.left)
+    ) {
+      this.curFrame = startFrame;
+    } else {
+      if (!this.left) {
         this.curFrame += 1;
+      } else {
+        this.curFrame -= 1;
       }
-      // if (startFrame === 17) debugger;      
+    }
     this.srcX = this.curFrame * this.width;
     this.elapsedTime = Date.now();
-    // debugger
   }
 
   changedDir(move) {
@@ -74,13 +79,21 @@ class Sprites {
         result = this.prevDir !== "RIGHT";
         this.prevDir = "RIGHT";
         return result;
+      case "RIGHT RUN":
+        result = this.prevDir !== "RIGHT RUN";
+        this.prevDir = "RIGHT RUN";
+        return result;
       case "LEFT":
         result = this.prevDir !== "LEFT";
         this.prevDir = "LEFT";
         return result;
+      case "LEFT RUN":
+        result = this.prevDir !== "LEFT RUN";
+        this.prevDir = "LEFT RUN";
+        return result;
       case "HOLD JUMP":
         result = this.prevDir !== "HOLD JUMP";
-        this.prevDir = "HOLD JUMP";
+        // this.prevDir = "HOLD JUMP";
         return result;
     }
   }
@@ -89,49 +102,41 @@ class Sprites {
     if (this.left === true) {
       if (action === "HOLD JUMP") {
         this.changed = this.changedDir(action);
-        return SPRITES_LOC[left][jump];
+        return SPRITES_LOC.left.jump;
       } else if (this.idle === false) {
-        this.changed = this.changedDir(action);
-        return SPRITES_LOC[left][run];
+        // debugger
+        this.changed = this.changedDir("LEFT RUN");
+        return SPRITES_LOC.left.run;
       } else {
-        return SPRITES_LOC[left][idle];
+        this.changed = this.changedDir("LEFT");
+        return SPRITES_LOC.left.idle;
       }
     } else {
       if (action === "HOLD JUMP") {
-        return SPRITES_LOC[right][jump];
+        this.changed = this.changedDir(action);
+        return SPRITES_LOC.right.jump;
       } else if (this.idle === false) {
-        return SPRITES_LOC[right][run];
+        this.changed = this.changedDir("RIGHT");
+        return SPRITES_LOC.right.run;
       } else {
-        return SPRITES_LOC[right][idle];
+        this.changed = this.changedDir("RIGHT");
+        return SPRITES_LOC.right.idle;
       }
     }
   }
 
-  draw(ctx, x, y, w, h, action, startFrame, endFrame) {
+  draw(ctx, x, y, w, h, action) {
     // ctx.clearRect(x, y, w, h);
-    let changed;
-    if (action === "HOLD JUMP") {
-      changed = this.changedDir("HOLD JUMP");
-    }
     if (this.left === true) {
-      const offset = endFrame - startFrame;
-      const newStart = this.cols - offset - 1;
-      const newEnd = this.cols - startFrame - 1;
-      // debugger
-      changed = this.changedDir("LEFT");
-      
-      const startFrame =
+      const loc = this.getAction(action); 
         // debugger
-        this.updateFrame(startFrame, endFrame, changed);
-      ctx.drawImage(this.leftChar, this.srcX, this.srcY, this.width, this.height, x, y, w, h);
-      this.prevDir = "LEFT";
+      this.updateFrame(loc.start, loc.end, this.changed);
+      ctx.drawImage(this.leftChar, this.srcX-2, this.srcY, this.width-2, this.height-2, x, y, w, h);
     } else {
-      changed = this.changedDir("RIGHT");
-      this.updateFrame(startFrame, endFrame, changed);
-      ctx.drawImage(this.rightChar, this.srcX, this.srcY, this.width, this.height, x, y, w, h);
+      const loc = this.getAction(action); 
+      this.updateFrame(loc.start, loc.end, this.changed);
+      ctx.drawImage(this.rightChar, this.srcX+2, this.srcY, this.width-2, this.height-2, x, y, w, h);
     }
-    
-    // ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
 }
 

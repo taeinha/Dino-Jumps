@@ -30,23 +30,28 @@ class Climber {
     // } else {
     //   this.size[1] = this.game.climberSize[1];
     // }
-    let startPos = 0;
-    let endPos = 3;
+    // let startPos = 0;
+    // let endPos = 3;
     // ctx.fillStyle = this.color;
     // ctx.fillRect(this.pos[0], this.pos[1], this.size[0], this.size[1]);
     
+    // if (this.jump.hold) {
+    //   startPos = 17;
+    //   endPos = 23;
+    // } else if (!this.sprite.idle) {
+    //   startPos = 4;
+    //   endPos = 10;
+    // }
+    let action;
+
     if (this.jump.hold) {
-      startPos = 17;
-      endPos = 23;
-    } else if (!this.sprite.idle) {
-      startPos = 4;
-      endPos = 10;
+      action = "HOLD JUMP";
     }
 
     this.sprite.draw(ctx,
       this.pos[0], this.pos[1],
       this.size[0], this.size[1],
-      startPos, endPos
+      action
     );
 
     this.drawPowerBar(ctx);
@@ -56,7 +61,7 @@ class Climber {
     ctx.fillStyle = "white";
     ctx.fillRect(24, this.game.dim_y - 18, (this.game.dim_x - 48), 12);
 
-    ctx.fillStyle = "red";
+    ctx.fillStyle = "#E54B4B";
     ctx.fillRect(
       24,
       this.game.dim_y - 18,
@@ -187,7 +192,7 @@ class Climber {
   floor() {
     if (this.pos[1] > this.game.start_pos[1]) {
       this.pos[1] = this.game.start_pos[1];
-      this.pos[1] += this.jump.hold ? 10 : 0;
+      // this.pos[1] += this.jump.hold ? 10 : 0;
       this.allowJump();
       
     } else if (this.pos[1] < this.game.floor_start[0]) {
@@ -201,8 +206,8 @@ class Climber {
     if (this.pos[0] < this.game.wall_start[0]) { // LEFT
       this.pos[0] = this.game.wall_start[0];
       this.vel[0] = -this.vel[0] / 2;
-    } else if (this.pos[0] > this.game.wall_start[1]) { // RIGHT
-      this.pos[0] = this.game.wall_start[1];
+    } else if (this.pos[0] > this.game.wall_start[1]-24) { // RIGHT
+      this.pos[0] = this.game.wall_start[1]-24;
       this.vel[0] = -this.vel[0] / 2;
     }
   }
@@ -245,12 +250,12 @@ class Climber {
         // LEFT
         // debugger
         this.pos[0] = rect.pos[0] - this.size[0];
-        this.vel = [Math.min(-this.vel[0] / 2, -3), 3];
+        this.vel = [Math.min(-this.vel[0] / 2, -10), 3];
       } else {
         // RIGHT
         // debugger
         this.pos[0] = rect.pos[0] + rect.size[0];
-        this.vel = [Math.min(-this.vel[0] / 2, -3), 3];
+        this.vel = [Math.min(-this.vel[0] / 2, -10), 3];
       }
     }
     return false;
