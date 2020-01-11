@@ -40,7 +40,7 @@ class Game {
     this.winner = false;
 
     this.background = new Image();
-    // this.background.src = 
+    this.background.src = "https://github.com/taeinha/js-climber/blob/master/src/images/Sky.png?raw=true";
     // retrieveHighScores(this.setHighScores.bind(this));
   }
 
