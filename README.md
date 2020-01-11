@@ -10,7 +10,7 @@ JS Climber is a 2D platformer inspired by the game, Jump King. The player contro
 - [↓]: Jump up (based on power bar)
 - [↓ + →]: Jump left (based on power bar)
 - [↓ + ←]: Jump right (based on power bar)
-- [R]: Jump right (based on power bar)
+- [R]: Restart level
 
 ## Functionality & MVP
 In JS Climber, users will be able to:
