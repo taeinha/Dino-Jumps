@@ -8,7 +8,7 @@ import IMAGES from './images';
 
 class Game {
   constructor() {
-    this.FPS = 60;
+    this.FPS = 30;
     this.MAX_VEL_Y = 15;
     this.MAX_LEVELS = Object.keys(levels).length;
     this.dim_x = 700;
