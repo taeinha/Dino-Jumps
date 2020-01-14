@@ -20,11 +20,11 @@ const firebaseDB = firebase.database();
 
 export const writeHighScoreData = (name, time) => {
   const scoreRef = firebaseDB.ref('highscores/' + Util.randomId());
-  scoreRef.set({name, time});
+  return scoreRef.set({name, time});
 };
 
 export const retrieveHighScores = (dispatch) => {
-  firebaseDB.ref('highscores/').once('value').then( data => {
+  return firebaseDB.ref('highscores/').once('value').then( data => {
     const merged = [];
     data.forEach(el => {
       const obj = {"id": el.key};

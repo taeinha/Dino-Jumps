@@ -7,9 +7,13 @@ class GameView {
     this.startGame = false;
     this.setControl = this.setControl.bind(this);
     this.resetControl = this.resetControl.bind(this);
+    this.restartGame = false;
   }
 
   setControl(e) {
+    if (e.key === "r") {
+      return this.game.restartGame();
+    }
     if (!this.keys.includes(e.key)) {
       this.keys.push(e.key);
     }

@@ -5,8 +5,8 @@
   margin: 25% auto;
   padding: 20px;
   border: 1px solid #888;
-  height: 30%;
-  width: 400px; 
+  height: auto;
+  width: 350px; 
   border-radius: 10px;
   border: 4px solid $grey;
   display: flex;
@@ -17,6 +17,7 @@
 }
 .modal-content h1 {
   margin-bottom: 30px;
+  text-align: center;
 }
 
 .modal-content > form {

@@ -187,10 +187,10 @@ class Climber {
   walls() {
     if (this.pos[0] < this.game.wall_start[0]) { // LEFT
       this.pos[0] = this.game.wall_start[0];
-      this.vel[0] = -this.vel[0] / 2;
+      this.vel[0] = -this.vel[0]*2;
     } else if (this.pos[0] > this.game.wall_start[1]-24) { // RIGHT
       this.pos[0] = this.game.wall_start[1]-24;
-      this.vel[0] = -this.vel[0] / 2;
+      this.vel[0] = -this.vel[0]*2;
     }
   }
 
@@ -232,25 +232,28 @@ class Climber {
         // LEFT
         // debugger
         this.pos[0] = rect.pos[0] - this.size[0];
-        this.vel = [Math.min(-this.vel[0] / 2, -10), 3];
+        this.vel = [Math.min(-this.vel[0], -15), 3];
       } else {
         // RIGHT
         // debugger
         this.pos[0] = rect.pos[0] + rect.size[0];
-        this.vel = [Math.min(-this.vel[0] / 2, -10), 3];
+        this.vel = [Math.max(-this.vel[0], 15), 3];
       }
     }
     return false;
   }
 
   checkPlatforms() {
-    this.game.platforms.forEach(platform => {
-      // if(this.collisionCheck(platform)) {
-        if (this.handleCollision(platform) && platform.winner && !this.game.winner) {
-          this.game.nextLevel();
-        }
-      // }
-    });
+    const platforms = this.game.platforms;
+    for (let i = 0; i < platforms.length; i++) {
+      if (
+        this.handleCollision(platforms[i]) &&
+        platforms[i].winner &&
+        !this.game.winner
+      ) {
+        this.game.nextLevel();
+      }
+    }
   }
 
   physics() {

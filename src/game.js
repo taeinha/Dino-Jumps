@@ -43,6 +43,8 @@ class Game {
 
     this.background = new MovingBackground();
     retrieveHighScores(this.setHighScores.bind(this));
+
+    this.hideModal = this.hideModal.bind(this);
   }
 
   setHighScores(data) {
@@ -63,7 +65,6 @@ class Game {
   //     climber.pos[1] = climber.pos[1] + this.viewPortOffset;
   //   // }
   // }
-  //Util.randomId()
 
   // updateOffset() {
   //   this.offset = this.start_pos[1] - this.climber.pos[1];
@@ -107,30 +108,37 @@ class Game {
 
   nextLevel() {
     if (this.level >= this.MAX_LEVELS) {
+      // debugger
       this.winner = true;
       this.openHighscoreModal();
     } else {
-      this.restartLevel();
+      this.changeToNextLevel();
     }
+  }
+
+  hideModal(modal) {
+    return (e) => {
+      if (e.target == modal) {
+        this.closeModals();
+        modal.removeEventListener("click", this.hideModal(modal));
+      }
+    };
   }
 
   openHighscoreModal() {
     let name = "";
-
     const modal = document.getElementById("highscore-modal");
     modal.className = "modal-background";
+    let that = this;
 
-    modal.addEventListener("click", function hideModal(event) {
-      if (event.target == modal) {
-        modal.className = "modal-background hidden";
-        modal.removeEventListener("click", hideModal);
-      }
-    });
-    
     if (this.isWinner()) {
-      const modalContent = document.getElementsByClassName("game-highscores-winner")[0];
+      const modalContent = document.getElementsByClassName(
+        "game-highscores-winner"
+      )[0];
+
+      modal.addEventListener("click", this.hideModal(modal));
       modalContent.className = "modal-content game-highscores-winner";
-      
+
       const timeLabel = document.getElementById("game-highscores-form-time");
       timeLabel.innerText = `${this.elapsedTime} seconds`;
 
@@ -139,19 +147,22 @@ class Game {
 
       const button = document.getElementById("game-highscores-form-submit");
       button.addEventListener("click", e => {
+        modalContent.className = "modal-content game-highscores-winner hidden";
         this.submitWinner(name, this.elapsedTime);
       });
     } else {
-      const modalContent = document.getElementsByClassName("game-highscores-lose")[0];
+      const modalContent = document.getElementsByClassName(
+        "game-highscores-lose"
+      )[0];
       modalContent.className = "modal-content game-highscores-lose";
+      modal.addEventListener("click", this.hideModal(modal, modalContent));
     }
-    
   }
 
   submitWinner(name, time) {
     const numScores = this.highscores.length;
     const lastScore = this.highscores[numScores - 1];
-    if (this.isWinner()) {
+    if (this.isWinnerWithFull()) {
       removeHighScore(lastScore.id, name, time, this.setHighScores);
     } else {
       writeHighScoreData(name, time).then(el =>
@@ -163,14 +174,45 @@ class Game {
   isWinner() {
     const numScores = this.highscores.length;
     const lastScore = this.highscores[numScores - 1];
-    if (numScores === 10 && this.elapsedTime >= lastScore.time) return false;
-    return true;
+    if (
+      (numScores >= 10 && this.elapsedTime < lastScore.time) ||
+      numScores < 10
+    )
+      return true;
+
+    return false;
   }
 
-  restartLevel() {
+  isWinnerWithFull() {
+      const numScores = this.highscores.length;
+      const lastScore = this.highscores[numScores - 1];
+      if (numScores >= 10 && this.elapsedTime < lastScore.time) return true;
+      return false;
+  }
+
+  changeToNextLevel() {
     this.climber.pos = [300, this.world_y - this.climberSize[1] - 25];
     this.level++;
     this.changePlatforms();
+  }
+
+  restartGame() {
+    this.climber.pos = [300, this.world_y - this.climberSize[1] - 25];
+    this.level = 1;
+    this.winner = false;
+    this.elapsedTime = 0;
+    this.changePlatforms();
+    this.closeModals();
+  }
+
+  closeModals() {
+    let modal = document.getElementById("highscore-modal");
+    let winModal = document.getElementsByClassName("game-highscores-winner")[0];
+    let loseModal = document.getElementsByClassName("game-highscores-lose")[0];
+    modal.className = "highscore-modal hidden";
+    winModal.className = "modal-content game-highscores-winner hidden";
+    loseModal.className = "modal-content game-highscores-lose hidden";
+    modal.parentNode.replaceChild(modal.cloneNode(true), modal);
   }
 
   floor(ctx) {

@@ -23,6 +23,10 @@ html {
   position: relative;
 }
 
+.canvas-container canvas, .canvas-container div {
+  border-radius: 10px;
+}
+
 .modal-background {
   display: flex; 
   align-items: center;
@@ -41,23 +45,12 @@ html {
   height: 100%;
   align-items: center;
   justify-content: center;
-}
-
-.game-right-sidebar {
-  width: 200px;
-  height: 700px;
-  display: flex;
-  flex-direction: column;
-}
-
-.game-right-sidebar-controls {
-  height: 350px;
-  background-color: blue;
-}
-
-.game-right-sidebar-tips {
-  height: 350px;
-  background-color: yellow;
+  position: relative;
 }
 
 
+.game-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
