@@ -5,6 +5,7 @@
   height: 700px;
   margin-right: 10px;
   box-sizing: border-box;
+  position: relative;
 }
 
 .game-highscores {
@@ -49,4 +50,19 @@
   font-size: 22px;
   font-weight: 700;
   padding: 0 1.7px;
+}
+
+.game-left-link-icons {
+  position: absolute;
+  top: -50px;
+  left: 0;
+  font-size: 40px;
+  color: $white;
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+}
+
+.game-left-link-icons a:hover {
+  color: $pink;
 }

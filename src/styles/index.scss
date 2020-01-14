@@ -45,12 +45,12 @@ html {
   height: 100%;
   align-items: center;
   justify-content: center;
-  position: relative;
 }
-
 
 .game-title {
   position: absolute;
-  top: 0;
+  top: -150px;
   left: 0;
+  width: 700px;
+  height: 150px
 }
