@@ -91,8 +91,10 @@ class Game {
       this.seconds = 0;
     }
     ctx.font = "20px Arial";
+    ctx.fillStyle = "#F7EBE8";
+    ctx.fillText(Util.convertSeconds(this.elapsedTime), 35, 20);
     ctx.fillStyle = "#1E1E24";
-    ctx.fillText(Util.convertSeconds(this.elapsedTime), 35, 50);
+    ctx.fillText(`${this.elapsedTime}s`, 35, 50);
   }
 
   drawPlatforms(ctx) {
@@ -132,9 +134,7 @@ class Game {
     let that = this;
 
     if (this.isWinner()) {
-      const modalContent = document.getElementsByClassName(
-        "game-highscores-winner"
-      )[0];
+      const modalContent = document.getElementsByClassName("game-highscores-winner")[0];
 
       modal.addEventListener("click", this.hideModal(modal));
       modalContent.className = "modal-content game-highscores-winner";
@@ -213,6 +213,11 @@ class Game {
     winModal.className = "modal-content game-highscores-winner hidden";
     loseModal.className = "modal-content game-highscores-lose hidden";
     modal.parentNode.replaceChild(modal.cloneNode(true), modal);
+  }
+
+  winModalExists() {
+    let winModal = document.getElementsByClassName("game-highscores-winner")[0];
+    return !winModal.className.includes("hidden");
   }
 
   floor(ctx) {

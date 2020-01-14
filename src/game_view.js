@@ -11,7 +11,7 @@ class GameView {
   }
 
   setControl(e) {
-    if (e.key === "r") {
+    if (e.key === "r" && !this.game.winModalExists) {
       return this.game.restartGame();
     }
     if (!this.keys.includes(e.key)) {
@@ -31,6 +31,11 @@ class GameView {
   attachKeyHandlers() {
     window.addEventListener("keydown", this.setControl);
     window.addEventListener("keyup", this.resetControl);
+  }
+
+  removeKeyHandlers() {
+    window.removeEventListener("keydown", this.setControl);
+    window.removeEventListener("keyup", this.resetControl);
   }
 
   start() {
