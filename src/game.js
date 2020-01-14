@@ -17,7 +17,7 @@ class Game {
     // this.offset = 0;
     this.climberSize = [36, 36]; // width, height
     this.start_pos = [this.dim_x / 2, this.world_y - this.climberSize[1] - 25]; // x, y
-    this.move_speed = 3;
+    this.move_speed = 5;
     this.jump_speed = [27, 27]; // x 50, y 70
     this.floor_start = [12, this.world_y - 12];
     this.wall_start = [12 + 12, this.dim_x - 34];
