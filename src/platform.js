@@ -12,6 +12,7 @@ class Platform {
     this.verticalImg = images.verticalImg;
     this.redFlag = images.redFlag;
     this.star = images.star;
+    this.isVertical = options.isVertical;
   }
 
   draw(ctx) {
