@@ -11,7 +11,7 @@ class GameView {
   }
 
   setControl(e) {
-    if (e.key === "r" && !this.game.winModalExists) {
+    if (e.key === "r" && !this.game.winModalExists()) {
       return this.game.restartGame();
     }
     if (!this.keys.includes(e.key)) {
