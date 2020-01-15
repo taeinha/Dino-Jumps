@@ -1,10 +1,11 @@
 <h1 align="center"> JS-Climber </h1>
-
+<br />
 <p align="center">
   <a href="https://taeinha.com/js-climber/">
     <img src="https://media.giphy.com/media/ViCKz0VgkFvAFIbor6/giphy.gif" alt="JS Climber" />
   </a>
 </p>
+<br />
 
 ## Background
 JS Climber is a 2D platformer inspired by the game, Jump King. The player controls a climber whose goal is to reach the top of every level by jumping on platforms. The climber can jump further by holding down ↓ (DOWN ARROW) based on a power bar. Once the level is finished, the user will be entered in the list of high scores with their respective completion time.
