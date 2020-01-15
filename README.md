@@ -34,7 +34,7 @@ Bonus MVPs:
 - Play the character in a viewport (canvas focused on the climber)
 
 ## <a href="https://wireframe.cc/4kg83U">Wireframes</a>
-<img src="https://i.ibb.co/RSZzsXY/wireframe.png" />
+<img src="https://i.ibb.co/Nry6vz2/Screen-Shot-2020-01-15-at-12-23-44-PM.png" />
 
 ## Architecture and Technologies
 Technologies used to develop this game:
