@@ -1,7 +1,7 @@
 <h1 align="center"> JS-Climber </h1>
 <br />
 <p align="center">
-  <a href="https://taeinha.com/js-climber/">
+  <a href="http://taeinha.com/Dino-Jumps/">
     <img src="https://media.giphy.com/media/ViCKz0VgkFvAFIbor6/giphy.gif" alt="JS Climber" />
   </a>
 </p>
