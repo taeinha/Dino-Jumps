@@ -1,4 +1,4 @@
-<h1 align="center"> JS-Climber </h1>
+<h1 align="center"> Dino Jumps </h1>
 <br />
 <p align="center">
   <a href="http://taeinha.com/Dino-Jumps/">
