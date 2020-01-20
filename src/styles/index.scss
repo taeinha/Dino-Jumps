@@ -5,11 +5,16 @@ html {
   box-sizing: border-box;
   font-family: Roboto, Arial, Helvetica, sans-serif;
   font-size: 12px;
+  overflow: auto;
 }
 
 body {
   background-color: $black;
+  display: flex;
   height: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 html {
@@ -18,9 +23,14 @@ html {
 }
 
 .canvas-container {
-  height: 700px;
-  width: 700px;
-  position: relative;
+/*   height: 700px;
+  width: 700px; */
+  position: relative; 
+
+}
+
+canvas {
+
 }
 
 .canvas-container canvas, .canvas-container div {
@@ -40,17 +50,7 @@ html {
   background-color: rgba(0,0,0,0.7); 
 }
 
-.game-container {
-  display: flex;
-  height: 100%;
-  align-items: center;
-  justify-content: center;
-}
-
 .game-title {
-  position: absolute;
-  top: -150px;
-  left: 0;
-  width: 700px;
-  height: 150px
+  width: 100%;
+  align-self: flex-end;
 }

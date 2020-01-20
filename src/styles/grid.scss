@@ -1,0 +1,39 @@
+.game-container {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-gap: 10px;
+}
+
+.game-upper-container {
+  display: grid;
+  grid-row: 1;
+  grid-gap: 10px;
+  grid-template-columns: 25% auto;
+}
+
+.game-lower-container {
+  display: grid;
+  grid-row: 2;
+  grid-gap: 10px;
+  grid-template-columns: 25% auto;
+}
+
+.game-left-sidebar {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 1;
+}
+
+.canvas-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.game-title {
+  
+}
+
+.game-left-link-icons {
+ /*  max-width: 100vw; */
+/*  background-color: yellow; */
+}
