@@ -17,6 +17,16 @@
   border: 2px solid $pink;
   border-radius: 10px;
   margin-bottom: 7px;
+  list-style-type: none;
+  li {counter-increment: li}
+  li::before {
+    content: counter(li); 
+    color: $pink;
+    display: inline-block; 
+    width: 1em;
+    margin-right: 0.5em; 
+    text-align: right; 
+  }
 }
 
 .game-left-sidebar h1 {

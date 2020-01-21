@@ -9,7 +9,7 @@
   <script src="https://kit.fontawesome.com/e4af1a28de.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" type="text/css" href="dist/main.css">
   <script type="text/javascript" src="dist/main.js" defer></script>
-  <title>JS Climber</title>
+  <title>Dino Jumps</title>
 </head>
 <body>
   <div class="game-container">
@@ -24,17 +24,30 @@
       </header>
       <div class="game-lower-container">
         <div class="game-left-sidebar">
-          <ul class="game-highscores">
+          <div class="game-highscores">
             <h1>Top 10 High Scores</h1>
-          </ul>
+            <ul>
+            </ul>
+          </div>
           <div class="game-controls">
             <h1>Game Controls</h1>
-            <p>[<i class="fas fa-arrow-left"></i>] : Move left</p>
-            <p>[<i class="fas fa-arrow-right"></i>] : Move right</p>
-            <p>[<i class="fas fa-arrow-down"></i>] : Jump</p>
-            <p>[<i class="fas fa-arrow-down"></i> + <i class="fas fa-arrow-left"></i>] : Jump left</p>
-            <p>[<i class="fas fa-arrow-down"></i> + <i class="fas fa-arrow-right"></i>] : Jump right</p>
-            <p>[<span>R</span>] : Restart game</p>
+            <div>
+              <p>[<i class="fas fa-arrow-left"></i>] : Move left</p>
+              <p>[<i class="fas fa-arrow-right"></i>] : Move right</p>
+              <p>[<i class="fas fa-arrow-down"></i>] : Jump</p>
+              <p>[<i class="fas fa-arrow-down"></i> + <i class="fas fa-arrow-left"></i>] : Jump left</p>
+              <p>[<i class="fas fa-arrow-down"></i> + <i class="fas fa-arrow-right"></i>] : Jump right</p>
+              <p>[<span>R</span>] : Restart game</p>
+            </div>
+          </div>
+
+          <div class="game-instructions">
+            <h1>How to play</h1>
+            <ul>
+              <li>Jump on platforms and reach the red flag to proceed to the next level.</li>
+              <li>Hold jump to charge the height of each jump and release to leap up, left, or right depending on the direction.</li>
+              <li>The platform with a star is the end of the game!</li>
+            </ul>
           </div>
         </div>
 

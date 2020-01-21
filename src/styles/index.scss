@@ -12,6 +12,7 @@ body {
   background-color: $black;
   display: flex;
   height: 100%;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -27,10 +28,11 @@ html {
   width: 700px; */
   position: relative; 
 
+
 }
 
 canvas {
-
+  
 }
 
 .canvas-container canvas, .canvas-container div {
@@ -44,13 +46,13 @@ canvas {
   z-index: 1; 
   left: 0;
   top: 0;
-  width: 700px; 
-  height: 700px; 
+  width: 100%; 
+  height: 100%; 
   overflow: none; 
   background-color: rgba(0,0,0,0.7); 
 }
 
 .game-title {
-  width: 100%;
+  max-height: 100%;
   align-self: flex-end;
 }
