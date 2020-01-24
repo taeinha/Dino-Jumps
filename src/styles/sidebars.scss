@@ -1,10 +1,9 @@
 @import "colors.scss";
 
 .game-left-sidebar {
-  width: 100%;
+  max-width: 240px;
 /*   min-width: 250px; */
   height: 100%;
-  margin-right: 10px;
   /* box-sizing: border-box; */
   position: relative;
 }
@@ -13,7 +12,7 @@
   height: auto;
   padding: 5px;
   background-color: white;
-  font-size: 20px;
+  font-size: 16px;
   border: 2px solid $pink;
   border-radius: 10px;
   margin-bottom: 7px;
@@ -41,17 +40,29 @@
   border-top-right-radius: 5px;
 }
 
-.game-highscores li {
+.game-instructions li, .game-highscores li {
   padding: 5px 10px;
 }
 
-.game-controls {
+.game-instructions, .game-controls {
   height: auto;
+  width: 100%;
   background-color: white;
   border: 2px solid $pink;
   border-radius: 10px;
-  font-size: 20px;
+  font-size: 16px;
   padding: 5px;
+  margin-bottom: 7px;
+}
+
+.game-instructions ul {
+  list-style-type: disc;
+  list-style-position: inside;
+}
+
+.game-instructions li {
+  padding-left: 5px;
+  margin-left: 5px;
 }
 
 .game-controls p {
