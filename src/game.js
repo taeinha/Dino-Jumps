@@ -50,7 +50,7 @@ class Game {
   setHighScores(data) {
     data.sort((a, b) => a.time - b.time);
     this.highscores = data;
-    const highscoreList = document.getElementsByClassName("game-highscores")[0];
+    const highscoreList = document.getElementsByClassName("game-highscores-list")[0];
     this.highscores.forEach(hs => {
       highscoreList.innerHTML += `<li>${hs.name} - ${hs.time}</li>`;
     });
