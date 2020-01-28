@@ -38,6 +38,20 @@ class GameView {
     window.removeEventListener("keyup", this.resetControl);
   }
 
+  attachButtonHandlers() {
+    const buttons = document.getElementsByClassName("game-sidebar-button");
+    
+  }
+
+  // setHighScores(data) {
+  //   data.sort((a, b) => a.time - b.time);
+  //   this.highscores = data;
+  //   const highscoreList = document.getElementsByClassName("game-highscores-list")[0];
+  //   this.highscores.forEach(hs => {
+  //     highscoreList.innerHTML += `<li>${hs.name} - ${hs.time}</li>`;
+  //   });
+  // }
+
   start() {
     // if (!this.startGame) {
       
@@ -55,7 +69,7 @@ class GameView {
     requestAnimationFrame(this.render.bind(this));
 
     this.climber.physics();
-    if (delta > 1000 / this.game.FPS) { // CAP FPS
+    if (delta > (1000 / this.game.FPS)) { // CAP FPS
       if (this.keys[0]) {
         this.climber.move(this.keys.toString(), delta);
       } 
