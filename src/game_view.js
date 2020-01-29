@@ -8,6 +8,9 @@ class GameView {
     this.setControl = this.setControl.bind(this);
     this.resetControl = this.resetControl.bind(this);
     this.restartGame = false;
+    this.showHighscores = true;
+    this.showControls = false;
+    this.showInstructions = false;
   }
 
   setControl(e) {
@@ -40,7 +43,67 @@ class GameView {
 
   attachButtonHandlers() {
     const buttons = document.getElementsByClassName("game-sidebar-button");
-    
+    const highscores = document.getElementsByClassName("game-highscores-list")[0];
+    const controls = document.getElementsByClassName("game-controls-info")[0];
+    const instructions = document.getElementsByClassName("game-instructions-info")[0];
+
+    buttons[0].addEventListener("click", e => {
+      this.switchHighscores(highscores);
+      this.hideControls(controls);
+      this.hideInstructions(instructions);
+    });
+    buttons[1].addEventListener("click", e => {
+      this.hideHighscores(highscores);
+      this.switchControls(controls);
+      this.hideInstructions(instructions);
+    });
+    buttons[2].addEventListener("click", e => {
+      this.hideHighscores(highscores);
+      this.hideControls(controls);
+      this.switchInstructions(instructions);
+    });
+  }
+
+  switchHighscores(highscores) {
+    this.showHighscores = !this.showHighscores;
+    if (this.showHighscores) {
+      highscores.className = "game-highscores-list";
+    } else {
+      highscores.className = "game-highscores-list hidden";
+    }
+  }
+
+  switchControls(controls) {
+    this.showControls = !this.showControls;
+    if (this.showControls) {
+      controls.className = "game-controls-info";
+    } else {
+      controls.className = "game-controls-info hidden";
+    }
+  }
+
+  switchInstructions(instructions) {
+    this.showInstructions = !this.showInstructions;
+    if (this.showInstructions) {
+      instructions.className = "game-instructions-info";
+    } else {
+      instructions.className = "game-instructions-info hidden";
+    }
+  }
+
+  hideHighscores(highscores) {
+    this.showHighscores = false;
+    highscores.className = "game-highscores-list hidden";
+  }
+
+  hideControls(controls) {
+    this.showControls = false;
+    controls.className = "game-controls-info hidden";
+  }
+
+  hideInstructions(instructions) {
+    this.showInstructions = false;
+    instructions.className = "game-instructions-info hidden";
   }
 
   // setHighScores(data) {
@@ -57,6 +120,7 @@ class GameView {
       
     // } else {
       this.attachKeyHandlers();
+      this.attachButtonHandlers();
       this.lastTime = 0;
       requestAnimationFrame(this.render.bind(this));
     // }
