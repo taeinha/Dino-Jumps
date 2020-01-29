@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="http://taeinha.com/Dino-Jumps/">
-    <img src="https://giphy.com/embed/ViCKz0VgkFvAFIbor6" alt="Dino Jumps" />
+    <img src="https://media.giphy.com/media/l3VGvaio2gJJZofru0/giphy.gif" alt="Dino Jumps" />
   </a>
 </p>
 <br />
