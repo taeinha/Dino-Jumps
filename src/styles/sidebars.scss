@@ -28,7 +28,7 @@
   }
 }
 
-.game-left-sidebar h1 {
+.game-sidebar-button {
   font-weight: 500;
   margin-bottom: 10px;
   padding: 10px 0;
@@ -40,6 +40,18 @@
   border-top-right-radius: 5px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  transition: all 1.5s ease;
+  cursor: pointer;
+}
+
+.game-sidebar-button:hover {
+  background-color: $tan;
+  color: $black;
+}
+
+.game-left-sidebar > div:hover {
+  border: 2px solid $tan;
+  transition: all 1.5s ease;
 }
 
 .game-instructions li, .game-highscores li {
@@ -55,6 +67,36 @@
   font-size: 16px;
   padding: 5px;
   margin-bottom: 7px;
+}
+
+.game-highscores-list, .game-controls-info, .game-instructions-info {
+  transition: all 1.5s ease;
+  display: block;
+  overflow: hidden;
+  padding-top: 10px;
+}
+
+.game-highscores-list {
+  height: 300px;
+}
+
+.game-controls-info {
+  height: 190px;
+}
+
+.game-instructions-info {
+  height: 250px;
+}
+
+.side-hidden {
+  height: 0px;
+  display: block;
+  padding-top: 0;
+}
+
+.game-sidebar-button-bottom {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
 }
 
 .game-instructions ul {
@@ -85,8 +127,6 @@ s
   justify-content: space-evenly;
   align-items: flex-end;
   height: 100%;
-
-
 }
 
 .game-left-link-icons a:hover {
