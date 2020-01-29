@@ -8,7 +8,7 @@ import IMAGES from './images';
 
 class Game {
   constructor() {
-    this.FPS = 30;
+    this.FPS = 15;
     this.MAX_VEL_Y = 15;
     this.MAX_LEVELS = Object.keys(levels).length;
     this.dim_x = 700;
@@ -50,7 +50,7 @@ class Game {
   setHighScores(data) {
     data.sort((a, b) => a.time - b.time);
     this.highscores = data;
-    const highscoreList = document.getElementsByClassName("game-highscores")[0];
+    const highscoreList = document.getElementsByClassName("game-highscores-list")[0];
     this.highscores.forEach(hs => {
       highscoreList.innerHTML += `<li>${hs.name} - ${hs.time}</li>`;
     });
