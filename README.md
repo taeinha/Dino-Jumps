@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="http://taeinha.com/Dino-Jumps/">
-    <img src="https://media.giphy.com/media/ViCKz0VgkFvAFIbor6/giphy.gif" alt="JS Climber" />
+    <img src="https://media.giphy.com/media/TFZh0xTV2kkLK36YS1/giphy.gif" alt="JS Climber" />
   </a>
 </p>
 <br />
