@@ -52,7 +52,24 @@ canvas {
 .game-left-sidebar {
 }
 
+@media only screen and (max-height: 876px) {
+  canvas {
+    width: 650px;
+    height: 650px;
+  }
 
+  .game-title {
+    width: 650px;
+  }
+
+  .game-container {
+    grid-template-rows: 100px 1fr;
+  }
+
+  .game-left-sidebar {
+    max-height: 650px;
+  }
+}
 
 @media only screen and (max-height: 768px) {
   canvas {
