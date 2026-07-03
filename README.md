@@ -1,7 +1,7 @@
 <h1 align="center"> Dino Jumps </h1>
 <br />
 <p align="center">
-  <a href="http://taeinha.com/Dino-Jumps/">
+  <a href="https://taeinha.github.io/Dino-Jumps/">
     <img src="https://media.giphy.com/media/kcrJwL7Eq79Wm3mhPR/giphy.gif" alt="Dino Jumps" />
   </a>
 </p>
